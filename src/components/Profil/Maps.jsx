@@ -1,17 +1,10 @@
 import React from "react";
 
-const Maps = () => {
+const Maps = ({ umkm }) => {
   return (
     <section className="relative w-full h-[400px] md:h-[600px]">
       {/* Google Maps full section */}
-      <iframe
-        title="Lokasi UMKM"
-        src="https://maps.google.com/maps?width=600&height=400&hl=en&q=cyber%20university&t=&z=11&ie=UTF8&iwloc=B&output=embed"
-        className="absolute inset-0 w-full h-full border-none"
-        allowFullScreen=""
-        loading="lazy"
-        referrerPolicy="no-referrer-when-downgrade"
-      ></iframe>
+      <div dangerouslySetInnerHTML={{ __html: umkm.lokasi_embed }} />
 
       {/* Overlay teks di atas maps */}
       <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/30 text-center text-white px-6">

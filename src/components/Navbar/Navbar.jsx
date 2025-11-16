@@ -1,64 +1,55 @@
-import React, { useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
-import { Link as Scroll } from "react-scroll";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
-const Navbar = () => {
-  const [open, setOpen] = useState(false);
+export default function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <nav className="bg-transparent shadow-lg text-white fixed w-full z-50 top-0 left-0 shadow-md">
-      <div className="max-w-6xl mx-auto px-6 py-7 flex justify-between items-center">
+    <nav
+      className={`
+        fixed left-1/2 -translate-x-1/2 z-50 
+        transition-all duration-300 
 
-        <h1 className="text-4xl tracking-tight font-bold text-primary">Foloka</h1>
+        ${scrolled
+          ? "top-0 w-full bg-black/80 backdrop-blur-md rounded-none shadow-md"
+          : "top-6 w-[90%] bg-white/10 backdrop-blur-md rounded-2xl shadow-lg"}
+      `}
+    >
+      <div className="px-6 py-4 flex items-center justify-between">
 
-        <ul className="hidden md:flex space-x-8">
-          <li>
-            <Scroll to="/" smooth={true} duration={600} className="cursor-pointer text-primary">
-              Home
-            </Scroll>
-          </li>
+        {/* LOGO */}
+        <Link to="/" className="text-2xl font-bold tracking-wide">
+          LOGO
+        </Link>
 
-          <li>
-            <Scroll to="recomandation" smooth={true} duration={600} className="cursor-pointer text-primary">
-              Rekomendasi
-            </Scroll>
-          </li>
-
-          <li>
-            <RouterLink to="/tentang" className="text-primary">
-              Tentang
-            </RouterLink>
-          </li>
-
-          <li>
-            <RouterLink to="/profil" className="text-primary">
-              Profil
-            </RouterLink>
-          </li>
-        </ul>
-
-        <button
-          className="md:hidden flex flex-col space-y-1 focus:outline-none"
-          onClick={() => setOpen(!open)}
-        >
-          <span className="w-6 h-0.5 bg-white"></span>
-          <span className="w-6 h-0.5 bg-white"></span>
-          <span className="w-6 h-0.5 bg-white"></span>
-        </button>
-      </div>
-
-      {open && (
-        <div className="md:hidden bg-primary px-6 py-4 space-y-3">
-          <Scroll to="hero" smooth={true} duration={600} className="block hover:text-cyan-400">
-            Home
-          </Scroll>
-          <RouterLink to="/tentang" className="block hover:text-cyan-400">
-            Tentang
-          </RouterLink>
+        {/* MENU */}
+        <div className="flex gap-6 text-lg font-medium">
+          <Link to="/">Home</Link>
+          <Link to="/tentang">Tentang</Link>
         </div>
-      )}
+
+        {/* SEARCH BAR */}
+        <div className="relative">
+          <input
+            type="text"
+            placeholder="Search..."
+            className="
+              bg-white/20 text-white placeholder-white/70 
+              px-4 py-2 rounded-xl outline-none 
+              backdrop-blur-sm border border-white/30
+            "
+          />
+        </div>
+
+      </div>
     </nav>
   );
-};
-
-export default Navbar;
+}

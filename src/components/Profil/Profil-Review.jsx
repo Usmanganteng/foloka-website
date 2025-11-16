@@ -4,9 +4,9 @@ import { Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/autoplay";
 
-import umkmImg from "../../assets/image/other-object/other-1.jpg"; // ganti sesuai path gambarmu
+import umkmImg from "../../assets/image/other-object/other-1.jpg";
 
-const ProfilReview = () => {
+const ProfilReview = ({ umkm }) => {
   const reviews = [
     { id: 1, name: "Rina", text: "Makanannya enak banget, ayam bakarnya juicy dan bumbunya meresap!" },
     { id: 2, name: "Budi", text: "Pelayanan ramah dan cepat, tempatnya juga bersih." },
@@ -15,38 +15,36 @@ const ProfilReview = () => {
   ];
 
   return (
-    <section className="bg-[#015258] text-white md:px-0 py-16 flex flex-col md:flex-row gap-12 justify-between items-start">
+    <section className="bg-[#015258] text-white py-16 px-4 md:px-8 flex flex-col md:flex-row gap-12 items-start">
+      
       {/* Kiri: Profil UMKM */}
-      <div className="flex flex-col w-full md:w-3/4">
+      <div className="w-full md:w-3/4">
         <h2 className="text-4xl font-semibold mb-6">Profil UMKM</h2>
 
-        {/* Responsive: ubah flex jadi kolom di mobile */}
-        <div className="flex flex-col md:flex-row bg-[#D4795E] rounded-xl overflow-hidden shadow-lg h-auto md:h-[340px]">
+        <div className="flex flex-col md:flex-row bg-[#D4795E] rounded-xl overflow-hidden shadow-lg">
+          
           {/* Gambar */}
           <img
             src={umkmImg}
             alt="UMKM"
-            className="w-full md:w-1/3 h-[220px] md:h-auto object-cover"
+            className="w-full md:w-1/3 h-56 md:h-auto object-cover"
           />
 
           {/* Deskripsi */}
           <div className="p-6 flex flex-col justify-between w-full md:w-3/4">
             <div>
-              <h3 className="text-3xl md:text-4xl font-semibold mb-2">Kedai Pak Nopal</h3>
+              <h3 className="text-3xl md:text-4xl font-semibold mb-3">{umkm.nama_toko}</h3>
               <p className="text-base md:text-lg leading-relaxed">
-                Kedai Pak Nopal menyajikan berbagai hidangan rumahan khas Indonesia,
-                dengan cita rasa autentik dan bahan segar setiap harinya. Spesialisasi kami
-                adalah ayam bakar, sambal terasi, dan kopi gula aren yang nikmat. dan kopi gula aren yang nikmatdan kopi gula aren yang nikmat dan kopi gula aren yang nikmat yang nikmatyang nikmatyang nikmatyang nikmatyang nikmatyang nikmatyang nikmatyang nikmatyang nikmat
+                {umkm.deskripsi_umkm}
               </p>
-
             </div>
 
-            <div className="flex gap-2 mt-4">
-              <button className="bg-[#015258] text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-[#013b3f] transition">
-                Menu
+            <div className="flex gap-3 mt-5">
+              <button className="bg-[#015258] text-white px-5 py-2 rounded-md text-sm font-semibold hover:bg-[#013b3f] transition">
+                Lihat Menu
               </button>
-              <button className="bg-white text-[#015258] px-4 py-2 rounded-md text-sm font-semibold hover:bg-gray-100 transition">
-                Contact
+              <button className="bg-white text-[#015258] px-5 py-2 rounded-md text-sm font-semibold hover:bg-gray-100 transition">
+                Hubungi
               </button>
             </div>
           </div>
@@ -54,7 +52,7 @@ const ProfilReview = () => {
       </div>
 
       {/* Kanan: Review Pelanggan */}
-      <div className="flex flex-col w-full md:w-1/4">
+      <div className="w-full md:w-1/4">
         <h2 className="text-4xl font-semibold mb-6">Review Pelanggan</h2>
 
         <Swiper
@@ -62,20 +60,15 @@ const ProfilReview = () => {
           slidesPerView={2}
           spaceBetween={20}
           loop={true}
-          autoplay={{
-            delay: 3000,
-            disableOnInteraction: false,
-          }}
+          autoplay={{ delay: 3000, disableOnInteraction: false }}
           modules={[Autoplay]}
-          className="h-[340px] w-full"
+          className="h-[340px]"
         >
-          {reviews.map((review) => (
-            <SwiperSlide key={review.id}>
+          {umkm.review.map((review, index) => (
+            <SwiperSlide key={index}>
               <div className="bg-white text-[#015258] rounded-lg p-6 shadow-md h-[150px] flex flex-col justify-between">
-                <div>
-                  <h4 className="font-semibold mb-1">{review.name}</h4>
-                  <p className="text-sm leading-relaxed">{review.text}</p>
-                </div>
+                <h4 className="font-semibold">{review.nama}</h4>
+                <p className="text-sm leading-relaxed">{review.deskripsi}</p>
               </div>
             </SwiperSlide>
           ))}
